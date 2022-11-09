@@ -1,3 +1,8 @@
-.row {
-    width: 50%;
+#felso {
+    margin-bottom: 20px;
+}
+
+#nevhiba, #evhiba, #arhiba, #magassaghiba {
+    color: red;
+    font-style: italic;
 }

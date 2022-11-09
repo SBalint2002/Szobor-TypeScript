@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Statue_1 = require("./Statue");
-let nevPattern = /^[aA-zZ, ]{1,}$/;
+let nevPattern = /^[A-Za-z, ]{1,}$/;
 let szobrok = [];
 document.addEventListener('DOMContentLoaded', () => {
     var _a;
@@ -12,10 +12,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (nevPattern.test(cim.value)) {
             joAdat(cim);
             jocim = true;
+            document.getElementById('nevhiba').textContent = "";
         }
         else {
             rosszAdat(cim);
             jocim = false;
+            if (!cim.value) {
+                document.getElementById('nevhiba').textContent = "Nem lehet üres";
+            }
+            else {
+                document.getElementById('nevhiba').textContent = "Speciális karaktert vagy számot tartalmaz";
+            }
         }
         //Évszám ellenőrzés
         let joev = false;
@@ -23,10 +30,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (parseInt(ev.value) < 2023) {
             joAdat(ev);
             joev = true;
+            document.getElementById('evhiba').textContent = "";
         }
         else {
             rosszAdat(ev);
             joev = false;
+            if (ev.value = "") {
+                document.getElementById('evhiba').textContent = "Nem lehet üres";
+            }
+            else
+                document.getElementById('evhiba').textContent = "Legfeljebb idei évet írhat";
         }
         //Ár ellenőrzés
         let joar = false;
@@ -34,10 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (parseInt(ar.value) > 0) {
             joAdat(ar);
             joar = true;
+            document.getElementById('arhiba').textContent = "";
         }
         else {
             rosszAdat(ar);
             joar = false;
+            document.getElementById('arhiba').textContent = "Értéke minimum 1 Ft legyen!";
         }
         //magasság ellenőrzés
         let jomagassag = false;
@@ -45,10 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (parseInt(magassag.value) > 9) {
             joAdat(magassag);
             jomagassag = true;
+            document.getElementById('magassaghiba').textContent = "";
         }
         else {
             rosszAdat(magassag);
             jomagassag = false;
+            document.getElementById('magassaghiba').textContent = "Legalább 10 cm legyen a magassága!";
         }
         //Feltöltés + összesítés
         if (jocim && joev && joev && jomagassag) {
@@ -57,6 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
             ev.value = "";
             ar.value = "";
             magassag.value = "";
+            document.getElementById('darabszam').textContent = "Művek darabszáma: " + String(szobrok.length);
+            let osszar = 0;
+            for (let i = 0; i < szobrok.length; i++) {
+                osszar += szobrok[i].price;
+            }
+            document.getElementById('osszertek').textContent = "Művek összesített értéke: " + String(osszar) + " Ft";
         }
     });
     //rossz adat esetén piros border + ellenorzo
